@@ -1,0 +1,132 @@
+<div class="char-word-converter">
+    <h2>English Letters Only - محول الأحرف</h2>
+    <textarea id="textInput" placeholder="Type English letters only..."></textarea>
+    <div class="buttons-box">
+        <button type="button" id="lowerBtn">Convert to Lowercase</button>
+        <button type="button" id="upperBtn">Convert to Uppercase</button>
+    </div>
+    <div class="result-box">
+        <div><s`trong>Character Count:</strong> <span id="charCount">0</span></div>
+        <div><strong>Word Count:</strong> <span id="wordCount">0</span></div>
+    </div>
+    <textarea id="outputText" placeholder="Converted text will appear here..." readonly></textarea>
+</div>
+
+<style>
+    .char-word-converter {
+        max-width: 700px;
+        margin: 40px auto;
+        background: linear-gradient(135deg, #f5f7fa, #e2ecf7);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        font-family: 'Arial', sans-serif;
+        direction: ltr;
+    }
+
+    .char-word-converter h2 {
+        text-align: center;
+        color: #2b2b2b;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .char-word-converter textarea {
+        width: 100%;
+        height: 150px;
+        font-size: 18px;
+        line-height: 1.8;
+        padding: 15px;
+        border: 1.5px solid #ced4da;
+        border-radius: 15px;
+        resize: vertical;
+        background-color: #ffffff;
+        color: #333;
+        box-sizing: border-box;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .buttons-box {
+        display: flex;
+        gap: 10px;
+        margin: 15px 0;
+        justify-content: center;
+    }
+
+    .buttons-box button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: #007BFF;
+        color: white;
+    }
+
+    .buttons-box button:hover {
+        opacity: 0.85;
+    }
+
+    .result-box {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+        font-size: 18px;
+        color: #333;
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    #outputText {
+        margin-top: 20px;
+        height: 100px;
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        font-size: 16px;
+        padding: 15px;
+        resize: none;
+        width: 100%;
+        color: #495057;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const textInput = document.getElementById("textInput");
+        const lowerBtn = document.getElementById("lowerBtn");
+        const upperBtn = document.getElementById("upperBtn");
+        const outputText = document.getElementById("outputText");
+        const charCountEl = document.getElementById("charCount");
+        const wordCountEl = document.getElementById("wordCount");
+
+        function sanitizeInput(text) {
+            return text.replace(/[^a-zA-Z\s]/g, "");
+        }
+
+        function updateCounts() {
+            let input = textInput.value;
+            input = sanitizeInput(input);
+            textInput.value = input;
+
+            charCountEl.textContent = input.length;
+            wordCountEl.textContent = input.trim().split(/\s+/).filter(word => word.length > 0).length;
+        }
+
+        textInput.addEventListener("input", updateCounts);
+
+        lowerBtn.addEventListener("click", function () {
+            const cleanText = sanitizeInput(textInput.value).toLowerCase();
+            outputText.value = cleanText;
+            updateCounts();
+        });
+
+        upperBtn.addEventListener("click", function () {
+            const cleanText = sanitizeInput(textInput.value).toUpperCase();
+            outputText.value = cleanText;
+            updateCounts();
+        });
+    });
+</script>
